@@ -1,0 +1,28 @@
+## Validate input for tenant_id and tran_id
+#if(!$ctx.args.input.tenant_id || $ctx.args.input.tenant_id == "")
+  $util.error("tenant_id is required and cannot be empty", "ValidationError")
+#end
+
+#if(!$ctx.args.input.tran_id || $ctx.args.input.tran_id == "")
+  ## You can also generate a tran_id if missing
+  $ctx.args.input.tran_id = $util.autoId()
+#end
+
+## Rest of the resolver logic for saving data
+{
+  "version": "2017-02-28",
+  "operation": "PutItem",
+  "key": {
+    "tenant_id": $util.dynamodb.toDynamoDBJson($ctx.args.input.tenant_id),
+    "tran_id": $util.dynamodb.toDynamoDBJson($ctx.args.input.tran_id)
+  },
+  "attributeValues": {
+    "tenant_id": $util.dynamodb.toDynamoDBJson($ctx.args.input.tenant_id),
+    "kind": $util.dynamodb.toDynamoDBJson($ctx.args.input.kind),
+    "status": $util.dynamodb.toDynamoDBJson($ctx.args.input.status),
+    "name": $util.dynamodb.toDynamoDBJson($ctx.args.input.name),
+    "birth": $util.dynamodb.toDynamoDBJson($ctx.args.input.birth),
+    "createdAt": $util.dynamodb.toDynamoDBJson($util.time.nowISO8601()),
+    "updatedAt": $util.dynamodb.toDynamoDBJson($util.time.nowISO8601())
+  }
+}
