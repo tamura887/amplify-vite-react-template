@@ -15,7 +15,7 @@ const Step1: React.FC = () => {
     const params = new URLSearchParams(location.search);
     const tenantId = params.get("tenant_id") || "oki_tenant";
 
-    const newEntry = await client.models.entrydata.create({ tenant_id: tenantId, tran_id: '' });
+    const newEntry = await client.models.entrydata.create({ tenant_id: tenantId ,tran_id: ""});
     if (newEntry.data?.tran_id) {
       setEntryData(newEntry.data);
       navigate("/step2");
