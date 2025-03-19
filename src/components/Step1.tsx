@@ -1,6 +1,6 @@
 import { useNavigate, useLocation } from "react-router-dom";
 import { Button } from "@aws-amplify/ui-react";
-import { generateClient } from "aws-amplify/api";
+import { generateClient, GraphQLResult } from "aws-amplify/api";
 import { useEntryDataContext } from "../context/EntryDataContext";
 
 const client = generateClient();
@@ -31,7 +31,7 @@ const Step1: React.FC = () => {
       });
 
       if ((newEntry as GraphQLResult<any>).data?.createEntryData?.tran_id) {
-        setEntryData(newEntry.data.createEntryData);
+        setEntryData((newEntry as GraphQLResult<any>).data.createEntryData);
         navigate("/step2");
       } else {
         console.error("Failed to create new entry");
