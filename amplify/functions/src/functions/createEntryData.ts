@@ -19,7 +19,7 @@ exports.handler = async (event: any) => {
   };
 
   await dynamoDb.put({
-    TableName: 'entrydata',
+    TableName: process.env.TABLE_NAME!,
     Item: newItem,
   }).promise();
 
