@@ -9,8 +9,6 @@ const schema = a.schema({
       status: a.string(),
       name: a.string(),
       birth: a.string(),
-      createdAt: a.timestamp(), // 自動生成される作成日時フィールド
-      updatedAt: a.timestamp(), // 自動生成される更新日時フィールド
     })
     .identifier(["tenant_id", "tran_id"])
     .authorization((allow) => [allow.publicApiKey()]),
