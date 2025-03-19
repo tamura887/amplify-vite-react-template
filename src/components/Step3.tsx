@@ -12,7 +12,7 @@ const Step3: React.FC = () => {
 
   const updateEntry = async () => {
     if (entryData && entryData.tran_id) {
-      const updatedEntry = await client.models.entrydata.update({ ...entryData, tenant_id: "hoge", tran_id: "geho" });
+      const updatedEntry = await client.models.entrydata.update({ ...entryData, tenant_id: entryData.tenant_id, tran_id: entryData.tran_id });
       if (updatedEntry.data) {
         setEntryData(updatedEntry.data);
       }
@@ -27,7 +27,9 @@ const Step3: React.FC = () => {
         <>
           {Object.entries(entryData).map(([key, value]) => (
             <Label key={key}>
-              <strong>{key.replace(/_/g, " ")}:</strong> {value ?? ""}
+              <>
+                <strong>{key.replace(/_/g, " ")}:</strong> {value ?? ""}
+              </>
             </Label>
           ))}
           <Button onClick={updateEntry}>Update Entry</Button>

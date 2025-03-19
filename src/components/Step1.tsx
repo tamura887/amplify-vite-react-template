@@ -1,11 +1,9 @@
 import { useNavigate, useLocation } from "react-router-dom";
 import { Button } from "@aws-amplify/ui-react";
-import { generateClient } from "aws-amplify/data";
-import type { Schema } from "../../amplify/data/resource";
+import { generateClient } from "aws-amplify/api";
 import { useEntryDataContext } from "../context/EntryDataContext";
 
-const client = generateClient<Schema>();
-
+const client = generateClient();
 const Step1: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -15,12 +13,31 @@ const Step1: React.FC = () => {
     const params = new URLSearchParams(location.search);
     const tenantId = params.get("tenant_id") || "oki_tenant";
 
-    const newEntry = await client.models.entrydata.create({ tenant_id: tenantId ,tran_id: "x"});
-    if (newEntry.data?.tran_id) {
-      setEntryData(newEntry.data);
-      navigate("/step2");
-    } else {
-      console.error("Failed to create new entry");
+    try {
+      const newEntry = await client.graphql({
+        query: `mutation CreateEntryData($tenant_id: String!) {
+          createEntryData(tenant_id: $tenant_id) {
+            tenant_id
+            tran_id
+            kind
+            status
+            name
+            birth
+            createdAt
+            updatedAt
+          }
+        }`,
+        variables: { tenant_id: tenantId },
+      });
+
+      if ((newEntry as GraphQLResult<any>).data?.createEntryData?.tran_id) {
+        setEntryData(newEntry.data.createEntryData);
+        navigate("/step2");
+      } else {
+        console.error("Failed to create new entry");
+      }
+    } catch (error) {
+      console.error("Error creating new entry:", error);
     }
   };
 
