@@ -1,6 +1,7 @@
 import { useNavigate, useLocation } from "react-router-dom";
 import { Button } from "@aws-amplify/ui-react";
 import { generateClient } from "aws-amplify/data";
+import { v4 as uuidv4 } from 'uuid'; // Add this import
 import type { Schema } from "../../amplify/data/resource";
 import { useEntryDataContext } from "../context/EntryDataContext";
 
@@ -14,7 +15,7 @@ const Step1: React.FC = () => {
     const params = new URLSearchParams(location.search);
     const tenantId = params.get("tenant_id") || "oki_tenant";
 
-    const newEntry = await client.models.entrydata.create({ tenant_id: tenantId, tran_id: '' });
+    const newEntry = await client.models.entrydata.create({ tenant_id: tenantId, tran_id: uuidv4() }); // Update this line
     if (newEntry.data?.tran_id) {
       setEntryData(newEntry.data);
       navigate("/step2");
