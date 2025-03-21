@@ -23,7 +23,7 @@ const Step3: React.FC = () => {
       } else {
         updatedEntry.errors?.forEach(error => {
           console.error(`Error: ${error.message}`);
-          alert(`エラーが発生しました: ${updatedEntry.errors}`);
+          alert(`エラーが発生しました: ${error.message}`);
         });
       }
     }
