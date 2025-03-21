@@ -6,6 +6,7 @@ import { useEntryDataContext } from "../context/EntryDataContext";
 
 const client = generateClient<Schema>();
 
+
 const Step3: React.FC = () => {
   const { entryData, setEntryData } = useEntryDataContext();
   const navigate = useNavigate();
@@ -13,22 +14,18 @@ const Step3: React.FC = () => {
   const updateEntry = async () => {
     console.log("entryData", entryData);
     if (entryData && entryData.tran_id) {
-      // UpdateEntrydataInput型に定義されているフィールドのみを抽出
-      const { tenant_id, tran_id, ...rest } = entryData;
-      const validEntryData = { tenant_id, tran_id, ...rest };      
-      const updatedEntry = await client.models.entrydata.update(validEntryData);
-      console.log("updatedEntry", updatedEntry);
+      // entryDataのコピーを作成し、createdAtとupdatedAtを削除
+      const { createdAt, updatedAt, ...dataToUpdate } = entryData;
+      const updatedEntry = await client.models.entrydata.update(dataToUpdate);
       if (updatedEntry.data) {
-        console.log("Entry updated", updatedEntry.data);
         setEntryData(updatedEntry.data);
         navigate("/step4");
-      }else{
+      } else {
         updatedEntry.errors?.forEach(error => {
           console.error(`Error: ${error.message}`);
-        alert(`エラーが発生しました: ${updatedEntry.errors}`);
+          alert(`エラーが発生しました: ${updatedEntry.errors}`);
         });
       }
-      
     }
   };
 
