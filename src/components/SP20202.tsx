@@ -16,7 +16,7 @@ const SP20202: React.FC = () => {
     if (entryData && entryData.tran_id) {
       // entryDataのコピーを作成し、createdAtとupdatedAtを削除
       const { createdAt, updatedAt, ...dataToUpdate } = entryData;
-      const updatedEntry = await client.models.entrydata.update(dataToUpdate);
+      const updatedEntry = await client.models.Entrydata.update(dataToUpdate);
       if (updatedEntry.data) {
         setEntryData(updatedEntry.data);
         navigate("/SP20401");

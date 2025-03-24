@@ -10,13 +10,13 @@ const client = generateClient<Schema>();
 // 受付完了
 const SP20402: React.FC = () => {
   const { entryData } = useEntryDataContext();
-  const [entry, setEntry] = useState<Schema["entrydata"]["type"] | null>(null);
+  const [entry, setEntry] = useState<Schema["Entrydata"]["type"] | null>(null);
   const navigate = useNavigate();
 
   useEffect(() => {
     if (entryData && entryData.tran_id) {
       const fetchEntry = async () => {
-        const fetchedEntry = await client.models.entrydata.get({ tenant_id: entryData.tenant_id, tran_id: entryData.tran_id });
+        const fetchedEntry = await client.models.Entrydata.get({ tenant_id: entryData.tenant_id, tran_id: entryData.tran_id });
         setEntry(fetchedEntry.data);
       };
       fetchEntry();
