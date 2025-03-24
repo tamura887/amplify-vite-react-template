@@ -78,7 +78,22 @@ function SP20201() {
         <strong>tran_id:</strong> {entryData?.tran_id ?? ""}
       </Label>
       <Flex as="form" onSubmit={handleSubmit} direction="column" gap="1rem" alignItems="flex-start">
-      {fieldNames.map((fieldName) => (
+      {fieldNames
+      .filter((fieldName) => ["name", "birth", "address"].includes(fieldName))
+      .map((fieldName) => (
+        <TextField
+          key={fieldName}
+          label={fieldName.charAt(0).toUpperCase() + fieldName.slice(1)} // フィールド名をタイトル化
+          name={fieldName}
+          value={formValues[fieldName]}
+          onChange={handleInputChange}
+          hasError={fieldChanges[fieldName] ? fieldErrors[fieldName] !== "" : false}
+          errorMessage={fieldErrors[fieldName]}
+        />
+      ))}
+      {fieldNames
+      .filter((fieldName) => ["name_kana", "gender", "zipcode","phone_mobile","phone_home","email","nationality","residential_status","expiration_date","purpose","shop_kind","shop_name","my_number","card_pin","passbook","job","industry","office_name","office_kana","office_phone","business_details"].includes(fieldName))
+      .map((fieldName) => (
         <TextField
           key={fieldName}
           label={fieldName.charAt(0).toUpperCase() + fieldName.slice(1)} // フィールド名をタイトル化

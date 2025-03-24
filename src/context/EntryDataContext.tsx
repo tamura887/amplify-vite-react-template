@@ -2,8 +2,8 @@ import React, { createContext, useState, ReactNode, useContext } from "react";
 import type { Schema } from "../../amplify/data/resource";
 
 interface EntryDataContextProps {
-  entryData: Schema["entrydata"]["type"] | null;
-  setEntryData: (data: Schema["entrydata"]["type"]) => void;
+  entryData: Schema["Entrydata"]["type"] | null;
+  setEntryData: (data: Schema["Entrydata"]["type"]) => void;
 }
 
 export const EntryDataContext = createContext<EntryDataContextProps | undefined>(undefined);
@@ -17,7 +17,7 @@ export const useEntryDataContext = () => {
 };
 
 export const EntryDataProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const [entryData, setEntryData] = useState<Schema["entrydata"]["type"] | null>(null);
+  const [entryData, setEntryData] = useState<Schema["Entrydata"]["type"] | null>(null);
 
   return (
     <EntryDataContext.Provider value={{ entryData, setEntryData }}>
