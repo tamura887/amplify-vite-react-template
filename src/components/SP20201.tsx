@@ -5,8 +5,8 @@ import { useEntryDataContext } from "../context/EntryDataContext";
 import { validationSchema } from "../schemas/validationSchema";
 import { validateAjv } from "../utils/validateAjv";
 
-
-function Step2() {
+// 口座開設入力画面
+function SP20201() {
   //前画面のデータを引継ぎ
   const { entryData, setEntryData } = useEntryDataContext();
   // フィールド一覧をスキーマから取得
@@ -48,9 +48,10 @@ function Step2() {
       return acc;
     }, {} as Record<string, boolean>) });
 
-    setFieldErrors(validateAjv(formValues));
+    const ferrors = validateAjv(formValues);
+    setFieldErrors(ferrors);
 
-    if (Object.values(fieldErrors).every(error => error === "")) {
+    if (Object.values(ferrors).every(error => error === "")) {
       alert("フォーム送信成功！");
       if (entryData) {
         setEntryData({ 
@@ -60,7 +61,7 @@ function Step2() {
           tran_id: entryData.tran_id ?? "" 
         });
       }
-      navigate("/step3");
+      navigate("/SP20202");
     } else {
       console.error("Validation failed", fieldErrors);
       alert("エラーがあります。修正してください。");
@@ -69,7 +70,7 @@ function Step2() {
 
   return (
     <main>
-      <h1>Entry Data</h1>
+      <h1>口座開設入力</h1>
       <Label>
         <strong>tenant_id:</strong> {entryData?.tenant_id ?? ""}
       </Label>
@@ -88,10 +89,10 @@ function Step2() {
           errorMessage={fieldErrors[fieldName]}
         />
       ))}
-      <Button type="submit">送信</Button>
+      <Button type="submit">次へ</Button>
     </Flex>
     </main>
   );
 }
 
-export default Step2;
+export default SP20201;

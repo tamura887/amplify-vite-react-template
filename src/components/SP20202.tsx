@@ -6,8 +6,8 @@ import { useEntryDataContext } from "../context/EntryDataContext";
 
 const client = generateClient<Schema>();
 
-
-const Step3: React.FC = () => {
+// 口座開設確認
+const SP20202: React.FC = () => {
   const { entryData, setEntryData } = useEntryDataContext();
   const navigate = useNavigate();
 
@@ -19,7 +19,7 @@ const Step3: React.FC = () => {
       const updatedEntry = await client.models.entrydata.update(dataToUpdate);
       if (updatedEntry.data) {
         setEntryData(updatedEntry.data);
-        navigate("/step4");
+        navigate("/SP20401");
       } else {
         updatedEntry.errors?.forEach(error => {
           console.error(`Error: ${error.message}`);
@@ -31,7 +31,7 @@ const Step3: React.FC = () => {
 
   return (
     <main>
-      <h1>Step 3</h1>
+      <h1>口座開設確認</h1>
       {entryData && (
         <>
           {Object.entries(entryData).map(([key, value]) => (
@@ -41,11 +41,11 @@ const Step3: React.FC = () => {
               </>
             </Label>
           ))}
-          <Button onClick={updateEntry}>Update Entry</Button>
+          <Button onClick={updateEntry}>登録</Button>
         </>
       )}
     </main>
   );
 };
 
-export default Step3;
+export default SP20202;

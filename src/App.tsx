@@ -1,17 +1,23 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Step1 from "./components/Step1";
-import Step2 from "./components/Step2";
-import Step3 from "./components/Step3";
-import Step4 from "./components/Step4";
+import SP20101 from "./components/SP20101";
+import SP20102 from "./components/SP20102";
+import SP20103 from "./components/SP20103";
+import SP20201 from "./components/SP20201";
+import SP20202 from "./components/SP20202";
+import SP20401 from "./components/SP20401";
+import SP20402 from "./components/SP20402";
 
 function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Step1 />} />
-        <Route path="/step2" element={<Step2 />} />
-        <Route path="/step3" element={<Step3 />} />
-        <Route path="/step4" element={<Step4 />} />
+        <Route path="/" element={<SP20101 />} />
+        <Route path="/SP20102" element={<SP20102 />} />
+        <Route path="/SP20103" element={<SP20103 />} />
+        <Route path="/SP20201" element={<SP20201 />} />
+        <Route path="/SP20202" element={<SP20202 />} />
+        <Route path="/SP20401" element={<SP20401 />} />
+        <Route path="/SP20402" element={<SP20402 />} />
       </Routes>
     </Router>
   );

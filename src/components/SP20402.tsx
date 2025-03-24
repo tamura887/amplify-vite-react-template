@@ -7,7 +7,8 @@ import { useEntryDataContext } from "../context/EntryDataContext";
 
 const client = generateClient<Schema>();
 
-const Step4: React.FC = () => {
+// 受付完了
+const SP20402: React.FC = () => {
   const { entryData } = useEntryDataContext();
   const [entry, setEntry] = useState<Schema["entrydata"]["type"] | null>(null);
   const navigate = useNavigate();
@@ -28,8 +29,7 @@ const Step4: React.FC = () => {
 
   return (
     <main>
-      <h1>Step 4</h1>
-      <Button onClick={prevStep}>Back</Button>
+      <h1>受付完了</h1>
       {entry && (
         <ul>
           {Object.entries(entry).map(([key, value]) => (
@@ -39,8 +39,9 @@ const Step4: React.FC = () => {
           ))}
         </ul>
       )}
-    </main>
+      <Button onClick={prevStep}>最初から</Button>
+      </main>
   );
 };
 
-export default Step4;
+export default SP20402;

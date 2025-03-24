@@ -5,8 +5,11 @@ import { v4 as uuidv4 } from 'uuid'; // Add this import
 import type { Schema } from "../../amplify/data/resource";
 import { useEntryDataContext } from "../context/EntryDataContext";
 
+
 const client = generateClient<Schema>();
-const Step1: React.FC = () => {
+
+// 業務選択画面
+const SP20101: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { setEntryData } = useEntryDataContext();
@@ -18,7 +21,7 @@ const Step1: React.FC = () => {
     const newEntry = await client.models.entrydata.create({ tenant_id: tenantId, tran_id: uuidv4() });
     if (newEntry.data?.tran_id) {
       setEntryData(newEntry.data);
-      navigate("/step2");
+      navigate("/SP20102");
     } else {
       newEntry.errors?.forEach(error => {
         console.error(`Error: ${error.message}`);
@@ -29,10 +32,10 @@ const Step1: React.FC = () => {
 
   return (
     <main>
-      <h1>Step 1</h1>
+      <h1>業務選択画面</h1>
       <Button onClick={nextStep}>Next</Button>
     </main>
   );
 };
 
-export default Step1;
+export default SP20101;
