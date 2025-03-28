@@ -16,7 +16,7 @@ const SP20402: React.FC = () => {
   useEffect(() => {
     if (entryData && entryData.tran_id) {
       const fetchEntry = async () => {
-        const fetchedEntry = await client.models.Entrydata.get({ tenant_id: entryData.tenant_id, tran_id: entryData.tran_id });
+        const fetchedEntry = await client.models.Entrydata.get({ tenant_id: entryData.tenant_id!, tran_id: entryData.tran_id! });
         setEntry(fetchedEntry.data);
       };
       fetchEntry();
@@ -31,16 +31,18 @@ const SP20402: React.FC = () => {
     <main>
       <h1>受付完了</h1>
       {entry && (
-        <ul>
-          {Object.entries(entry).map(([key, value]) => (
-            <li key={key}>
-              <strong>{key.replace(/_/g, " ")}:</strong> {value ? value.toString() : "N/A"}<br />
-            </li>
-          ))}
-        </ul>
+        <div>
+          <ul>
+            {Object.entries(entry).map(([key, value]) => (
+              <li key={key}>
+                <strong>{key.replace(/_/g, " ")}:</strong> {value ? value.toString() : "N/A"}<br />
+              </li>
+            ))}
+          </ul>
+        </div>
       )}
       <Button onClick={prevStep}>最初から</Button>
-      </main>
+    </main>
   );
 };
 

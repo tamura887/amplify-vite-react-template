@@ -1,9 +1,13 @@
 import React, { createContext, useState, ReactNode, useContext } from "react";
-import type { Schema } from "../../amplify/data/resource";
+
+// すべてのプロパティをオプショナルにする型を定義
+type EntryData = {
+  [key: string]: any;
+};
 
 interface EntryDataContextProps {
-  entryData: Schema["Entrydata"]["type"] | null;
-  setEntryData: (data: Schema["Entrydata"]["type"]) => void;
+  entryData: EntryData | null;
+  setEntryData: (data: EntryData) => void;
 }
 
 export const EntryDataContext = createContext<EntryDataContextProps | undefined>(undefined);
@@ -17,7 +21,7 @@ export const useEntryDataContext = () => {
 };
 
 export const EntryDataProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const [entryData, setEntryData] = useState<Schema["Entrydata"]["type"] | null>(null);
+  const [entryData, setEntryData] = useState<EntryData | null>(null);
 
   return (
     <EntryDataContext.Provider value={{ entryData, setEntryData }}>

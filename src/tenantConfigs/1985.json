@@ -1,0 +1,19 @@
+{
+    "tenant_id": "1985",
+    "tenantName": "高鍋信用金庫",
+    "visibleFieldGroup": {
+        "nationality": true,
+        "purpose": true,
+        "shop_kind": true,
+        "my_number": true,
+        "card_pin": true,
+        "passbook": true,
+        "job": true,
+        "business_details": true,
+        "account_details": true
+    },
+    "smsNotificationSettings": {
+        "applicationCompletionMessage": "[Webサービス名] ¶申し込みが完了しました。¶お問い合わせ：000-000-0000",
+        "procedureCompletionMessage": "[Webサービス名] ¶手続きが完了しました。¶{ダイアログ入力メッセージ}¶お問い合わせ：000-000-0000"
+    }
+}

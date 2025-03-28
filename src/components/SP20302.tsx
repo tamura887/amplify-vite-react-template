@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { Button, Label } from "@aws-amplify/ui-react";
+import { Button } from "@aws-amplify/ui-react";
 import type { Schema } from "../../amplify/data/resource";
 import { generateClient } from "aws-amplify/data";
 import { useEntryDataContext } from "../context/EntryDataContext";
@@ -7,8 +7,8 @@ import { useEntryDataContext } from "../context/EntryDataContext";
 const client = generateClient<Schema>();
 
 
-// 口座開設確認
-const SP20202: React.FC = () => {
+// 内容変更確認
+const SP20302: React.FC = () => {
   const { entryData } = useEntryDataContext();
   const navigate = useNavigate();
 
@@ -23,30 +23,19 @@ const SP20202: React.FC = () => {
         name_kana:          entryData.name_kana,
         birth:              entryData.birth,
         gender:             { "男性": "1", "女性": "2", "未回答": "3" }[ entryData.gender as string ],
+        shop_code:          entryData.shop_code,
+        account_kind:       entryData.account_kind,
+        account_number:     entryData.account_number,
         zipcode:            entryData.zipcode,
         address:            entryData.address,
-        phone_mobile:       entryData.phone_mobile,
-        phone_home:         entryData.phone_home,
-        email:              entryData.email,
-        nationality:        entryData.nationality === "日本以外" ? entryData.nationality_etc : entryData.nationality,
-        residential_status: entryData.residential_status === "その他" ? entryData.residential_status_etc : entryData.residential_status,
-        expiration_date:    entryData.expiration_date,
-        purpose:            entryData.purpose === "その他" ? entryData.purpose_etc : entryData.purpose,
-        shop_kind:          { "ネット":"1","実店舗":"1" }[entryData.shop_kind as string],
-        shop_name:          entryData.shop_name,
-        my_number:          entryData.my_number,
-        card_pin:           entryData.card_pin,
-        passbook:           entryData.passbook,
+        address_kana:       entryData.address_kana,
+        phone_mobile_new:   entryData.phone_mobile_new,
+        phone_home_new:     entryData.phone_home_new,
         job:                entryData.job === "その他" ? entryData.job_etc : entryData.job,
         industry:           entryData.industry === "その他" ? entryData.industry_etc : entryData.industry,
         office_name:        entryData.office_name,
         office_kana:        entryData.office_kana,
         office_phone:       entryData.office_phone,
-
-        business_details:    entryData.business_details,
-        foreign_trade:      entryData.foreign_trade === "あり" ? entryData.foreign_trade_cname : entryData.foreign_trade,
-        foreign_assets:     entryData.foreign_assets === "あり" ? entryData.foreign_assets_cname : entryData.foreign_assets,
-        foreign_details:    entryData.foreign_details,
       }
       console.dir(updatedData);
       try {
@@ -69,15 +58,8 @@ const SP20202: React.FC = () => {
 
   return (
     <main>
-      <h1>口座開設確認</h1>
+      <h1>内容変更確認</h1>
       <div >
-        <Label>
-          <strong>tenant_id:</strong> {entryData!.tenant_id}<br/>
-          <strong>tenant_name:</strong> {entryData!.tenant_name}<br/>
-          <strong>tran_id:</strong> {entryData!.tran_id}<br/>
-          <strong>kind:</strong> {entryData!.kind}<br/>
-        </Label>
-
         {entryData && (
           <>
             {Object.entries(entryData).map(([key, value]) => (
@@ -85,7 +67,7 @@ const SP20202: React.FC = () => {
                 <strong>{key.replace(/_/g, " ")}:</strong> {value ?? ""}<br />
               </div>
             ))}
-            <Button onClick={() => navigate("/SP20201")}>戻る</Button>
+            <Button onClick={() => navigate("/SP20301")}>戻る</Button>
             <Button onClick={updateEntry}>登録</Button>
           </>
         )}
@@ -94,4 +76,4 @@ const SP20202: React.FC = () => {
   );
 };
 
-export default SP20202;
+export default SP20302;

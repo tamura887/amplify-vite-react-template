@@ -1,39 +1,38 @@
 import { useNavigate, useLocation } from "react-router-dom";
-import { Button } from "@aws-amplify/ui-react";
-import { generateClient } from "aws-amplify/data";
-import { v4 as uuidv4 } from 'uuid'; // Add this import
-import type { Schema } from "../../amplify/data/resource";
+import { Button ,Label} from "@aws-amplify/ui-react";
 import { useEntryDataContext } from "../context/EntryDataContext";
-
-
-const client = generateClient<Schema>();
+import { tenantConfigs } from "../tenantConfigs/tenantConfigIndex";
 
 // 業務選択画面
 const SP20101: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { setEntryData } = useEntryDataContext();
+  const { entryData,setEntryData } = useEntryDataContext();
+  const params = new URLSearchParams(location.search);
+  const tenant_id = params.get("tenant_id") || "9999";
+  const tenant_name = tenantConfigs[tenant_id].tenantName;
 
-  const nextStep = async () => {
-    const params = new URLSearchParams(location.search);
-    const tenantId = params.get("tenant_id") || "oki_tenant";
+  const nextStep = (kind: string) => {
 
-    const newEntry = await client.models.Entrydata.create({ tenant_id: tenantId, tran_id: uuidv4() });
-    if (newEntry.data?.tran_id) {
-      setEntryData(newEntry.data);
-      navigate("/SP20102");
-    } else {
-      newEntry.errors?.forEach(error => {
-        console.error(`Error: ${error.message}`);
-        alert(`エラーが発生しました: ${error.message}`);
-      });      
-    }
+    // DBには保存せず、entryDataに値を設定
+    const newEntryData = {
+      tenant_id: tenant_id,
+      tenant_name:tenant_name,
+      kind: kind
+    };
+    setEntryData(newEntryData);
+    navigate("/SP20102");
   };
 
   return (
     <main>
       <h1>業務選択画面</h1>
-      <Button onClick={nextStep}>Next</Button>
+      <Label>
+        <strong>tenant_id:</strong> {tenant_id}<br/>
+        <strong>tenant_name:</strong> {tenant_name}<br/>
+      </Label>
+      <Button onClick={() =>nextStep("1")}>新規口座開設</Button>
+      <Button onClick={() =>nextStep("2")}>住所／電話番号変更</Button>
     </main>
   );
 };

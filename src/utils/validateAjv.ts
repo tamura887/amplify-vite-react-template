@@ -1,43 +1,67 @@
-import { validatePatterns, validationSchema } from "../schemas/validationSchema";
-import Ajv, { ErrorObject } from "ajv";
+import { validatePatterns, ValidationSchema } from "../schemas/validationSchema";
+import Ajv, { ErrorObject,ValidateFunction  } from "ajv";
 import addFormats from "ajv-formats";
+import addKeywords from "ajv-keywords";
 
+export class validateAjv {
 
-const fieldNames = Object.keys(validationSchema.properties);
+  validateFnction: ValidateFunction ;
+  validationSchema: ValidationSchema;
 
-export const validateAjv = (inputingValues: {[key: string]: any;}): Record<string, string> => {
-  const validatedValues = Object.keys(inputingValues).reduce((acc, key) => {
-    // 必須チェックを発動させるため空文字は定義なしとする
-    if (validationSchema.required.includes(key) && inputingValues[key] === "") {
+  constructor(validationSchema: ValidationSchema) {
+    const ajv = new Ajv({ allErrors: true, $data: true }); 
+    addKeywords(ajv); // Add additional keywords like $data
+    addFormats(ajv);
+    // カスタムキーワード "uiType" を登録
+    ajv.addKeyword("uiType");
+    ajv.addKeyword("options");
+    ajv.addKeyword("disible");
+    ajv.addKeyword("dependency");
+    ajv.addKeyword("guidance");
+    ajv.addKeyword("group");
+    this.validateFnction = ajv.compile(validationSchema);
+    this.validationSchema = validationSchema;
+  }
+
+  public validate(inputingValues: {[key: string]: any;}): Record<string, string> {
+    const validatedValues = Object.keys(inputingValues).reduce((acc, key) => {
+      // 必須チェックを発動させるため空文字は定義なしとする
+      if (inputingValues[key] === "") {
+        return acc;
+      }
+      let val = inputingValues[key];
+      acc[key] = val;
       return acc;
-    }
-    let val = inputingValues[key];
-    acc[key] = val;
-    return acc;
-  }, {} as Record<string, any>);
+    }, {} as Record<string, any>);
+    
+    this.validateFnction(validatedValues);
+    console.dir(this.validateFnction.errors);
+  
+    const newFieldErrors = Object.keys(this.validationSchema.properties).reduce((acc, field) => {
+      const error = this.validateFnction.errors?.find((error) => error.instancePath === `/${field}` || error.params.missingProperty === field);
+      acc[field] = this.createErrorMessage(error, field);
+      return acc;
+    }, {} as Record<string, string>);
+  
+    return newFieldErrors;
+  }
 
-  const ajv = new Ajv({allErrors: true });
-  addFormats(ajv);
-  const validate = ajv.compile(validationSchema);
-  validate(validatedValues);
-
-  const newFieldErrors = fieldNames.reduce((acc, field) => {
-    const error = validate.errors?.find((error) => error.instancePath === `/${field}` || error.params.missingProperty === field);
-    acc[field] = createErrorMessage(error, field);
-    return acc;
-  }, {} as Record<string, string>);
-
-  return newFieldErrors;
-}
-
-const createErrorMessage = (error: ErrorObject<string, Record<string, any>, unknown> | undefined, fieldName: string) => {
+  private createErrorMessage(error: ErrorObject<string, Record<string, any>, unknown> | undefined, fieldName: string){
     if (error) {
-      let prop = validationSchema.properties[fieldName];
+      let prop = this.validationSchema.properties[fieldName];
       switch (error.keyword) {
+        case "const":
+          if(error.schemaPath.includes("anyOf")){
+            return `いずれかを選択してください。`;
+          }else{
+            return `${prop.title}が一致していません。`;
+          }
         case "required":
           return `${prop.title}を入力して下さい。`;
         case "minLength":
           return `${prop.title}は${prop.minLength}文字以上で入力してください。`;
+        case "maxLength":
+          return `${prop.title}は${prop.maxLength}文字以下で入力してください。`;
         case "pattern":
           switch (error.params.pattern) {
             case validatePatterns.fullWidth:
@@ -59,3 +83,8 @@ const createErrorMessage = (error: ErrorObject<string, Record<string, any>, unkn
     }
     return "";
   }
+
+}
+
+
+
