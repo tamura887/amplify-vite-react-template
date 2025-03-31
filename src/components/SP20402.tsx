@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@aws-amplify/ui-react";
-import type { Schema } from "../../amplify/data/resource";
+import type { Schema } from "@amplifyDir/data/resource";
 import { generateClient } from "aws-amplify/data";
 import { useEntryDataContext } from "../context/EntryDataContext";
 

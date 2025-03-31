@@ -1,10 +1,9 @@
 import { Button, Label, Flex } from "@aws-amplify/ui-react";
 import { useNavigate } from "react-router-dom";
 import { generateClient } from "aws-amplify/data";
-import { v4 as uuidv4 } from 'uuid'; // Add this import
-import type { Schema } from "../../amplify/data/resource";
+import { v4 as uuidv4 } from 'uuid';
+import type { Schema } from "@amplifyDir/data/resource";
 import { useEntryDataContext } from "../context/EntryDataContext";
-
 
 const client = generateClient<Schema>();
 
@@ -19,7 +18,6 @@ const SP20103: React.FC = () => {
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     const tran_id = uuidv4();
-
     // DBへ登録
     const newEntry = await client.models.Entrydata.create({ 
       tenant_id: entryData?.tenant_id!,

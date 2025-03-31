@@ -2,9 +2,9 @@ import React from "react";
 import { Button, Label, Flex } from "@aws-amplify/ui-react";
 import { useNavigate } from "react-router-dom";
 import { generateClient } from "aws-amplify/data";
-import type { Schema } from "../../amplify/data/resource";
+import type { Schema } from "@amplifyDir/data/resource";
 import { useEntryDataContext } from "../context/EntryDataContext";
-import { tenantConfigs } from "../tenantConfigs/tenantConfigIndex";
+import { tenantConfigs } from "@tenantConfigs/tenantConfigIndex";
 
 const client = generateClient<Schema>();
 
@@ -32,7 +32,13 @@ const SP20103_callback: React.FC = () => {
       }
       // DBから取得
       const fetchedEntry = await client.models.Entrydata.get({ tenant_id: tenant_id!, tran_id: tran_id });
-      if (!fetchedEntry.data || fetchedEntry.errors || fetchedEntry.data.status !== "00") {
+      if (
+        !fetchedEntry.data || 
+        fetchedEntry.errors || 
+        !Array.isArray(fetchedEntry.data) || 
+        fetchedEntry.data.length === 0 || 
+        fetchedEntry.data[0].status !== "00"
+      ) {
         alert("DBにデータがありません。");
         return;
       }
@@ -41,11 +47,12 @@ const SP20103_callback: React.FC = () => {
         tenant_id: tenant_id,
         tenant_name: tenantConfig.tenantName,
         tran_id: tran_id,
-        kind: fetchedEntry.data.kind,
-        name: fetchedEntry.data.name,
-        birth: fetchedEntry.data.birth,
-        address: fetchedEntry.data.address,
+        kind: fetchedEntry.data[0].kind,
+        name: fetchedEntry.data[0].name,
+        birth: fetchedEntry.data[0].birth,
+        address: fetchedEntry.data[0].address,
       };
+      
       setEntryData(newEntryData);
     };
 

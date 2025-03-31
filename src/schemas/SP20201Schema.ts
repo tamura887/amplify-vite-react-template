@@ -1,5 +1,5 @@
 
-import { validatePatterns, ValidationSchema } from "../schemas/validationSchema";
+import { validatePatterns, ValidationSchema } from "@schemas/validationSchema";
 export const SP20201Schema: ValidationSchema = {
   type: "object",
   properties: {

@@ -3,7 +3,7 @@ import { Button, Label, Flex } from "@aws-amplify/ui-react";
 import { useNavigate } from "react-router-dom";
 import { useEntryDataContext } from "../context/EntryDataContext";
 
-import { SP20102Schema } from "../schemas/SP20102Schema";
+import { SP20102Schema } from "@schemas/SP20102Schema";
 import { FormHandler } from "../utils/FormHandler";
 
 // 重要事項確認画面

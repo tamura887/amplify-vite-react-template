@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Label, Button, Flex} from "@aws-amplify/ui-react";
 import { useNavigate } from "react-router-dom";
 import { useEntryDataContext } from "../context/EntryDataContext";
-import { SP20301Schema } from "../schemas/SP20301Schema";
+import { SP20301Schema } from "@schemas/SP20301Schema";
 import { FormHandler } from "../utils/FormHandler";
 
 function SP20301() {

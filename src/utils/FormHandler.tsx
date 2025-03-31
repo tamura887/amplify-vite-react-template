@@ -1,7 +1,7 @@
 import { validateAjv } from "./validateAjv";
-import { ValidationSchema } from "../schemas/validationSchema";
+import { ValidationSchema } from "@schemas/validationSchema";
 import { Button, TextField, RadioGroupField, Radio, TextAreaField, SelectField, PasswordField, CheckboxField } from "@aws-amplify/ui-react";
-import { tenantConfigs, configType } from "../tenantConfigs/tenantConfigIndex";
+import { tenantConfigs, configType } from "@tenantConfigs/tenantConfigIndex";
 
 export class FormHandler {
   private schema: ValidationSchema;
@@ -120,8 +120,8 @@ export class FormHandler {
     const isRequired = this.schema.required.includes(fieldName);
 
     const commonProps = {
-      label: "",//field.title,
       key: fieldName,
+      label: "",//field.title,
       name: fieldName,
       value: formValues[fieldName],
       onChange: handleInputChange,
@@ -182,7 +182,7 @@ export class FormHandler {
         fieldElement = <TextField {...commonProps} />;
     }
 
-    let guidanceElements:JSX.Element[] = [];
+    let guidanceElements: any[] = [];
     
     if(field.guidance){
       field.guidance.forEach((guidance,index) =>{

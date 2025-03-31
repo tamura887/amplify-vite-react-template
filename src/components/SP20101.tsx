@@ -1,7 +1,7 @@
 import { useNavigate, useLocation } from "react-router-dom";
 import { Button ,Label} from "@aws-amplify/ui-react";
 import { useEntryDataContext } from "../context/EntryDataContext";
-import { tenantConfigs } from "../tenantConfigs/tenantConfigIndex";
+import { tenantConfigs } from "@tenantConfigs/tenantConfigIndex";
 
 // 業務選択画面
 const SP20101: React.FC = () => {

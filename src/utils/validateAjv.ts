@@ -1,4 +1,4 @@
-import { validatePatterns, ValidationSchema } from "../schemas/validationSchema";
+import { validatePatterns, ValidationSchema } from "@schemas/validationSchema";
 import Ajv, { ErrorObject,ValidateFunction  } from "ajv";
 import addFormats from "ajv-formats";
 import addKeywords from "ajv-keywords";

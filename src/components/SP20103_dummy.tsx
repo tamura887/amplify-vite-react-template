@@ -1,7 +1,7 @@
 import { Button, Label, Flex } from "@aws-amplify/ui-react";
 import { useNavigate } from "react-router-dom";
 import { generateClient } from "aws-amplify/data";
-import type { Schema } from "../../amplify/data/resource";
+import type { Schema } from "@amplifyDir/data/resource";
 
 
 const client = generateClient<Schema>();
