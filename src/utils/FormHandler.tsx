@@ -205,8 +205,10 @@ export class FormHandler {
     }
     return (
       <>
+        <hr/>
         {guidanceElements}
-        {field.title}
+        <strong >{field.title}</strong>
+        <div style={{fontSize: "0.8rem",color:"red"}}>{!isDisabled && isRequired ? "※必須" : ""}</div>
         {fieldElement}
       </>
     );

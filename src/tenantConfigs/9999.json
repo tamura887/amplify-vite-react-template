@@ -2,7 +2,7 @@
     "tenant_id": "9999",
     "tenantName": "OKI信用金庫",
     "visibleFieldGroup": {
-        "nationality": false,
+        "nationality": true,
         "purpose": true,
         "shop_kind": true,
         "my_number": true,
