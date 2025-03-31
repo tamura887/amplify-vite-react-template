@@ -7,7 +7,7 @@ import { tenantConfigs } from "../tenantConfigs/tenantConfigIndex";
 const SP20101: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { entryData,setEntryData } = useEntryDataContext();
+  const { setEntryData } = useEntryDataContext();
   const params = new URLSearchParams(location.search);
   const tenant_id = params.get("tenant_id") || "9999";
   const tenant_name = tenantConfigs[tenant_id].tenantName;
