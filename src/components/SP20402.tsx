@@ -14,9 +14,9 @@ const SP20402: React.FC = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (entryData && entryData.tran_id) {
+    if (entryData && entryData.id) {
       const fetchEntry = async () => {
-        const fetchedEntry = await client.models.Entrydata.get({ tenant_id: entryData.tenant_id!, tran_id: entryData.tran_id! });
+        const fetchedEntry = await client.models.Entrydata.get({ tenant_id: entryData.tenant_id!, id: entryData.id! });
         setEntry(fetchedEntry.data);
       };
       fetchEntry();

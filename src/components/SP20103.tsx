@@ -17,17 +17,17 @@ const SP20103: React.FC = () => {
   // マイナンバーカードで本人確認
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-    const tran_id = uuidv4();
+    const id = uuidv4();
     // DBへ登録
     const newEntry = await client.models.Entrydata.create({ 
       tenant_id: entryData?.tenant_id!,
-      tran_id: tran_id,
+      id: id,
       status: "00",
       kind: entryData?.kind,
     });
     if (newEntry.data) {
       setEntryData(newEntry.data);
-      navigate("/SP20103_dummy?tenant_id=" + entryData?.tenant_id + "&tran_id=" + tran_id);
+      navigate("/SP20103_dummy?tenant_id=" + entryData?.tenant_id + "&id=" + id);
     }else{
       newEntry.errors?.forEach(error => {
         console.error(`Error: ${error.message}`);
@@ -42,7 +42,7 @@ const SP20103: React.FC = () => {
       <Label>
         <strong>tenant_id:</strong> {entryData?.tenant_id ?? ""}<br/>
         <strong>tenant_name:</strong> {entryData?.tenant_name ?? ""}<br/>
-        <strong>tran_id:</strong> {entryData?.tran_id ?? ""}<br/>
+        <strong>id:</strong> {entryData?.id ?? ""}<br/>
         <strong>kind:</strong> {entryData?.kind ?? ""}<br/>
       </Label>
       <Flex as="form" onSubmit={handleSubmit} direction="column" gap="1rem" alignItems="flex-start">

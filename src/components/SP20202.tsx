@@ -15,7 +15,7 @@ const SP20202: React.FC = () => {
   const updateEntry = async () => {
     if (entryData) {
       const updatedData = {
-        tran_id:            entryData.tran_id,
+        id:                 entryData.id,
         tenant_id:          entryData.tenant_id,
         kind:               entryData.kind,
         status:             "02",
@@ -74,7 +74,7 @@ const SP20202: React.FC = () => {
         <Label>
           <strong>tenant_id:</strong> {entryData!.tenant_id}<br/>
           <strong>tenant_name:</strong> {entryData!.tenant_name}<br/>
-          <strong>tran_id:</strong> {entryData!.tran_id}<br/>
+          <strong>id:</strong> {entryData!.id}<br/>
           <strong>kind:</strong> {entryData!.kind}<br/>
         </Label>
 

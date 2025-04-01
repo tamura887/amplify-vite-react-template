@@ -12,7 +12,7 @@ const SP20103_dummy: React.FC = () => {
   //パラメータ受け取り
   const params = new URLSearchParams(location.search);
   const tenant_id = params.get("tenant_id");
-  const tran_id = params.get("tran_id");
+  const id = params.get("id");
 
   const navigate = useNavigate();
 
@@ -21,14 +21,14 @@ const SP20103_dummy: React.FC = () => {
     event.preventDefault();
 
     // 本人認証済みとして基本４情報の疑似データ入れる
-    if (!tenant_id || !tran_id) {
-      alert("tenant_id または tran_id が無効です。");
+    if (!tenant_id || !id) {
+      alert("tenant_id または id が無効です。");
       return;
     }
 
     const updateData =  {
       tenant_id: tenant_id,
-      tran_id: tran_id,
+      id: id,
       name : "沖　太郎",
       birth : "19961231",
       address : "東京都千代田区1-1-1　○○ビル",
@@ -41,7 +41,7 @@ const SP20103_dummy: React.FC = () => {
       alert(`エラーが発生しました: ${error}`);
       return;
     }
-    navigate("/SP20103_callback?tenant_id=" + tenant_id + "&tran_id=" + tran_id);
+    navigate("/SP20103_callback?tenant_id=" + tenant_id + "&id=" + id);
   };
 
   return (
@@ -49,7 +49,7 @@ const SP20103_dummy: React.FC = () => {
       <h1>テスト用本人確認（疑似画面）</h1>
       <Label>
         <strong>tenant_id:</strong> {tenant_id}<br/>
-        <strong>tran_id:</strong> {tran_id}<br/>
+        <strong>id:</strong> {id}<br/>
       </Label>
       <Flex as="form" onSubmit={handleSubmit} direction="column" gap="1rem" alignItems="flex-start">
       <Button type="submit">認証OK</Button>

@@ -15,7 +15,7 @@ const SP20302: React.FC = () => {
   const updateEntry = async () => {
     if (entryData) {
       const updatedData = {
-        tran_id:            entryData.tran_id,
+        id:                 entryData.id,
         tenant_id:          entryData.tenant_id,
         kind:               entryData.kind,
         status:             "02",

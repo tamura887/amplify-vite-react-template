@@ -17,12 +17,12 @@ const SP20103_callback: React.FC = () => {
   //パラメータ受け取り
   const params = new URLSearchParams(location.search);
   const tenant_id = params.get("tenant_id");
-  const tran_id = params.get("tran_id");
+  const id = params.get("id");
 
   React.useEffect(() => {
     const fetchData = async () => {
-      if (!tenant_id || !tran_id) {
-        alert("tenant_id または tran_id が指定されていません");
+      if (!tenant_id || !id) {
+        alert("tenant_id または id が指定されていません");
         return;
       }
       const tenantConfig = tenantConfigs[tenant_id];
@@ -31,7 +31,7 @@ const SP20103_callback: React.FC = () => {
         return;
       }
       // DBから取得
-      const fetchedEntry = await client.models.Entrydata.get({ tenant_id: tenant_id!, tran_id: tran_id });
+      const fetchedEntry = await client.models.Entrydata.get({ tenant_id: tenant_id!, id: id });
       if (
         !fetchedEntry.data || 
         fetchedEntry.errors || 
@@ -46,7 +46,7 @@ const SP20103_callback: React.FC = () => {
       const newEntryData = {
         tenant_id: tenant_id,
         tenant_name: tenantConfig.tenantName,
-        tran_id: tran_id,
+        id: id,
         kind: fetchedEntry.data[0].kind,
         name: fetchedEntry.data[0].name,
         birth: fetchedEntry.data[0].birth,
@@ -57,7 +57,7 @@ const SP20103_callback: React.FC = () => {
     };
 
     fetchData();
-  }, [tenant_id, tran_id, setEntryData]);
+  }, [tenant_id, id, setEntryData]);
 
 
   // 次の画面へ
@@ -77,7 +77,7 @@ const SP20103_callback: React.FC = () => {
       <Label>
         <strong>tenant_id:</strong> {tenant_id}<br/>
         <strong>tenant_name:</strong> {entryData!.tenant_name}<br/>
-        <strong>tran_id:</strong> {tran_id}<br/>
+        <strong>id:</strong> {id}<br/>
         <strong>kind:</strong> {entryData!.kind}<br/>
       </Label>
       <Flex as="form" onSubmit={handleSubmit} direction="column" gap="1rem" alignItems="flex-start">

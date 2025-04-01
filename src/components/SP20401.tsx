@@ -20,7 +20,7 @@ const SP20401: React.FC = () => {
       <Label>
         <strong>tenant_id:</strong> {entryData!.tenant_id}<br/>
         <strong>tenant_name:</strong> {entryData!.tenant_name}<br/>
-        <strong>tran_id:</strong> {entryData!.tran_id}<br/>
+        <strong>id:</strong> {entryData!.id}<br/>
         <strong>kind:</strong> {entryData!.kind}<br/>
       </Label>
       <Flex as="form" onSubmit={handleSubmit} direction="column" gap="1rem" alignItems="flex-start">

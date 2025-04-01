@@ -10,7 +10,7 @@ const schema = a.schema({
   Entrydata: a
     .model({
       tenant_id: a.string().required(),
-      tran_id: a.id().required(),
+      id: a.id().required(),
       ppid: a.string(),
       kind: a.string(),
       status: a.string(),
@@ -54,7 +54,7 @@ const schema = a.schema({
       registeredAt: a.datetime(),
       expiredAt: a.datetime(),
     })
-    .identifier(['tenant_id', 'tran_id'])
+    .identifier(['tenant_id', 'id'])
     .authorization((allow) => [allow.publicApiKey()]),
 });
 
